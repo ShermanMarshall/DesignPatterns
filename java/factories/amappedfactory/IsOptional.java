@@ -1,4 +1,4 @@
-package java.factory.mappedfactory;
+package factories.amappedfactory;
 
 /**
  * @interface:   IsOptional    

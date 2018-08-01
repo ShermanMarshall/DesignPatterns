@@ -1,4 +1,4 @@
-package java.factory.mappedfactory;
+package factories.amappedfactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +12,7 @@ import java.util.Map;
  * @author:      Sherman
  */
 public class MappedFactory {
-    private static final Map<Class<?>, Constructor<ConcreteType>> factory;
+    private static final Map<Class<?>, Constructor<?>> factory;
     private static final int NUM_TYPES = 1;
     
     /**
@@ -22,8 +22,10 @@ public class MappedFactory {
     static {
          factory = new HashMap(NUM_TYPES);
          try {
-            Constructor<ConcreteType> type = ConcreteType.class.getConstructor(ConcreteType.class);
-            factory.put(ConcreteType.class, type);           
+            //Constructor<ConcreteType> type = ConcreteType.class.getConstructor(ConcreteType.class);
+	    Constructor<?> type = (Constructor<?>) ConcreteType.class.getConstructor();
+
+            factory.put(ConcreteType.class, (Constructor<?>) type);
          } catch (NoSuchMethodException nsme) {
              System.out.println(nsme);
          }
@@ -33,7 +35,7 @@ public class MappedFactory {
         AbstractType instance = null;
         
         try {
-            instance = factory.get(clazz).newInstance();
+            instance = (AbstractType) factory.get(clazz).newInstance();
         } catch (InvocationTargetException ite) {
             System.out.println(ite);
         } catch (InstantiationException ie) {
@@ -44,4 +46,13 @@ public class MappedFactory {
         
         return instance;
     }
+
+    public static void main(String...args) {
+	MappedFactory mappedFactory = new MappedFactory();
+	ConcreteType ct = (ConcreteType) mappedFactory.create(ConcreteType.class);
+	
+	ct.implement();
+	ct.commonLogic();
+    }
+
 }

@@ -1,4 +1,4 @@
-package java.factory.mappedfactory;
+package factories.amappedfactory;
 
 /**
  * @class:       AbstractType
@@ -8,7 +8,7 @@ package java.factory.mappedfactory;
 public abstract class AbstractType implements IsOptional {
             
     public void commonMethod() {
-        System.out.println("I am shared between all instances. If fields aren't a concern, I should be static");
+        System.out.println("I am shared between all instances. If shared memory isn't a concern, I should be static");
     }
     
     public abstract void implement();
@@ -16,4 +16,5 @@ public abstract class AbstractType implements IsOptional {
     public void commonLogic() {
         System.out.println("I can satisfy interface contract between children types here");
     }
+
 }
