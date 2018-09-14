@@ -12,8 +12,13 @@ import java.util.Map;
  * @author:      Sherman
  */
 public class MappedFactory {
-    private static final Map<Class<?>, Constructor<?>> factory;
+    private static final Map<String, Constructor<?>> factory;
     private static final int NUM_TYPES = 1;
+
+    //If the application uses a naming scheme between frontend/backend, it may be possible to
+    //create objects dynamically using the same method, avoiding multiple switch statements, or
+    //hiding objects (inner/ private classes). Handling arguments is additional complexity
+    private static final String CONCRETE_TYPE = "type1";
     
     /**
      * Boilerplate to initialize factory, but happens prior to application startup,
@@ -25,17 +30,17 @@ public class MappedFactory {
             //Constructor<ConcreteType> type = ConcreteType.class.getConstructor(ConcreteType.class);
 	    Constructor<?> type = (Constructor<?>) ConcreteType.class.getConstructor();
 
-            factory.put(ConcreteType.class, (Constructor<?>) type);
+            factory.put(CONCRETE_TYPE, (Constructor<?>) type);
          } catch (NoSuchMethodException nsme) {
              System.out.println(nsme);
          }
     }
     
-    public AbstractType create(Class<?> clazz) {
+    public static AbstractType create(String stringOrEnum) {
         AbstractType instance = null;
         
         try {
-            instance = (AbstractType) factory.get(clazz).newInstance();
+            instance = (AbstractType) factory.get(stringOrEnum).newInstance();
         } catch (InvocationTargetException ite) {
             System.out.println(ite);
         } catch (InstantiationException ie) {
@@ -48,8 +53,7 @@ public class MappedFactory {
     }
 
     public static void main(String...args) {
-	MappedFactory mappedFactory = new MappedFactory();
-	ConcreteType ct = (ConcreteType) mappedFactory.create(ConcreteType.class);
+	ConcreteType ct = (ConcreteType) MappedFactory.create(CONCRETE_TYPE);
 	
 	ct.implement();
 	ct.commonLogic();
