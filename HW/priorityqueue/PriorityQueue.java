@@ -15,21 +15,21 @@ public class PriorityQueue<PriorityQueueItem> {
 	}
 
 	/**
-	 * method takes an input PriorityQueueItem object and performs an insertion sort
+	 * Method takes an input PriorityQueueItem object and performs an insertion sort
 	 * to store it using a binary search
 	 */
 	public synchronized void add(PriorityQueueItem item) {
 		int max = 0, min = items.size() - 1, position = min / 2;
 		float priority = item.getPriority();
 
-		// Add student at front of queue if priority is greater than current maximum
+		// Add item at front of queue if priority is greater than current maximum
 		if (priority > maxPriority && items.size() < maxSize) {
 			maxPriority = priority;
 			items.add(0, item);
 			return;
 		}
 
-		// Add the item when the size is 1. The algorithm hasn'PriorityQueueItem scaled
+		// Add the item when the size is 1. The algorithm hasn't scaled
 		// yet
 		if (items.size() == 1) {
 			items.add(item);
