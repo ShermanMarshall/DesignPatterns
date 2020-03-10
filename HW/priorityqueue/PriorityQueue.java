@@ -63,8 +63,8 @@ public class PriorityQueue<PriorityQueueItem> {
 			position += (items.get(position).getPriority() > priority) ? 1 : 0;
 			if (items.size() == maxSize && position != maxSize) {
 				items.remove(maxSize-1);
-				items.add(position, item);
 			}
+			items.add(position, item);			
 		}
 	}
 
