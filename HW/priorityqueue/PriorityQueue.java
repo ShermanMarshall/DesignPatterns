@@ -57,14 +57,19 @@ public class PriorityQueue<PriorityQueueItem> {
 			}
 		} while ((min - max) > 1);
 
+		if (items.size() == maxSize && position != maxSize) {
+			items.remove(maxSize-1);
+		}
+		
 		if (insertAfter) {
 			items.add(item);
 		} else {
-			position += (items.get(position).getPriority() > priority) ? 1 : 0;
-			if (items.size() == maxSize && position != maxSize) {
-				items.remove(maxSize-1);
-                        }
-			items.add(position, item);
+			if (items.size() == position) {
+				items.add(item);
+			} else {
+				position += (items.get(position).getPriority() > priority) ? 1 : 0;			
+				items.add(position, item);
+			}
 		}
 	}
 
